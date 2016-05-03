@@ -46,7 +46,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button> <!--This is the hamburger button when the menu is collapsed -->
-                <a class="navbar-brand" href="#">Hotel Chain Name</a>
+                <a class="navbar-brand" href="prototype.html">Hotel Chain Name</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
