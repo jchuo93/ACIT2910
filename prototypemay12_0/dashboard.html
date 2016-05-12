@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" >
+<?php include('new.html');?>
+  <body>
+    <h1>Admin Dashboard</h1>
+
+    <div id="content">
+
+      <div id="dashboardContainer">
+
+        <table id="serviceTable" border='1'>
+        <caption>Product List</caption>
+          <thead>
+            <tr>
+              <th>Service Id</th>
+              <th>Service</th>
+              <th>Description</th>
+              <th>Price per person</th>
+              <th>Staff required</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody id="productslist">
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+
+
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+          </tbody>
+        </table>
+
+        <div id="editContainer">        
+
+        <form method="post" action="dashboard.php">
+          <table id="editTable" border='1'>
+            <caption>Edit Product</caption>
+            <thead>
+              <tr>
+                <th>Service Id</th>
+                <th>Service</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Staff required</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody id="editproduct">
+              <tr>
+               <td></td>
+               <td><input id='name' name='name' type='text' placeholder='Name'/></td>
+               <td><input id='desc' name='desc' type='text' placeholder='Description'/></td>
+               <td><input id='price' name='price r' type='text' placeholder='Price'/></td>
+               <td><input id='staff' name='name' type='text' placeholder='Staff'/></td>
+               <td><input type='button' value='Remove' id='removeItem'/></td>
+              </tr>
+            </tbody>
+          </table>
+        
+        </form>
+
+        <input type="button" value="Confirm Product Added" id="addProduct"/>
+        </div>
+         
+
+      </div> 
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+            // LOAD ALL PRODUCTS
+            function loadProducts() {
+                $.ajax({
+                    url: "dashproducts.php",
+                    type: "GET",
+                    dataType: 'html',
+                    success: function(returnedData) {
+                        console.log("cart checkout response: ", returnedData);
+                        $("#productslist").html(returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus);
+                    }
+                });
+            }
+
+            loadProducts();
+
+/*
+        $('#addProduct').click(function() {
+
+          var edit = $('#editproduct');
+          var item = "<tr> <td></td> <td><input id='name' name='name' type='text' placeholder='name'/></td> <td><input id='desc' name='desc' type='text' placeholder='Description'/></td>  <td><input id='price' name='price r' type='text' placeholder='price'/></td>  <td><input id='staff' name='name' type='text' placeholder='staff'/></td> <td><input type='button' value='Remove' id='removeItem'/></td></tr>";
+          edit.append(item);
+
+
+      });
+
+*/
+
+        $('#addProduct').click(function(){
+
+
+          //see if you can eliminate these variable declarations and use the selectors directly in the array declaration
+          var name = $("#name").val();
+          var desc = $("#desc").val();
+          var price = $("#price").val();
+          var staff = $("#staff").val();
+
+          var itemArray = [];
+
+          //get all the info from the forms
+          var item = {name: name, desc: desc, price: price, staff: staff};
+          itemArray.push(item);
+
+          var itemsAsJSON = JSON.stringify(itemArray);
+                console.log("itemsAsJSON", itemsAsJSON);
+
+
+                console.log("Confirm addition of product", itemArray);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "addProduct", items: itemsAsJSON},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus);
+                    }
+                });
+
+
+                location.reload();
+
+        });
+
+      });
+
+    </script>
+
+
+  </body>
+</html>
