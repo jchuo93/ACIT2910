@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    
+
+    <div id="content">
+
+      <div id="dashboardContainer" class="container">
+        <h1>Admin Dashboard</h1>
+        <table id="serviceTable" class="table-hover table-responsive" border='1'>
+        <h4>Product List</h4>
+          <thead>
+            <tr>
+              <th>Service Id</th>
+              <th>Service</th>
+              <th>Description</th>
+              <th>Price per person</th>
+              <th>Image</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="productslist">
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+
+
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+          </tbody>
+        </table>
+        <br/>
+        
+        <form method="post" action="dashboard.php">
+          <table id="editTable" class="table-hover table-responsive" border='1'>
+            <h4>Add a Service</h4>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody id="editproduct">
+              <tr>
+               <td><input id='nameService' name='name' type='text' placeholder='Name'/></td>
+               <td><input id='descService' name='desc' type='text' placeholder='Description'/></td>
+               <td><input id='priceService' name='price' type='text' placeholder='Price'/></td>
+               <td><input id='imageService' name='image' type='text' placeholder='Image'/></td>
+              </tr>
+            </tbody>
+          </table>
+               
+        </form>
+
+        <input type="button" value="Confirm Product Added" id="addProduct"/>
+        <br/>
+
+      <table id="foodTable" class="table-hover table-responsive" border='1'>
+        <h4>Food List</h4>
+          <thead>
+            <tr>
+              <th>Food Id</th>
+              <th>Food</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Course</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="foodlist">
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+
+
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+          </tbody>
+        </table>
+        <br/>
+        
+        <form method="post" action="dashboard.php">
+          <table id="editTable" class="table-hover table-responsive" border='1'>
+            <h4>Add a Food</h4>
+            <thead>
+              <tr>
+                <th>Food</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Course</th>
+              </tr>
+            </thead>
+            <tbody id="editfood">
+              <tr>
+               <td><input id='nameFood' name='name' type='text' placeholder='Name'/></td>
+               <td><input id='descFood' name='desc' type='text' placeholder='Description'/></td>
+               <td><input id='priceFood' name='price' type='text' placeholder='Price'/></td>
+               <td><input id='imageFood' name='image' type='text' placeholder='Image'/></td>
+               <td><input id='courseFood' name='course' type='text' placeholder='Course'/></td>
+              </tr>
+            </tbody>
+          </table>
+        
+        </form>
+
+        <input type="button" value="Confirm Food Added" id="addFood"/>
+        <br/>
+
+      <table id="roomTable" class="table-hover table-responsive" border='1'>
+        <h4>Room User List</h4>
+          <thead>
+            <tr>
+              <th>Room Id</th>
+              <th>Password</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="roomlist">
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+
+
+            <!-- THIS SECTION WILL BE REPLACED BY SERVER GENERATED ROWS -->
+          </tbody>
+        </table>
+        <br/>
+
+        <form method="post" action="dashboard.php">
+          <table id="editTable" class="table-hover table-responsive" border='1'>
+            <h4>Add a User</h4>
+            <thead>
+              <tr>
+                <th>Room_id</th>
+                <th>Password</th>
+              </tr>
+            </thead>
+            <tbody id="edituser">
+              <tr>
+               <td><input id='roomid' name='roomid' type='text' placeholder='Name'/></td>
+               <td><input id='password' name='password' type='text' placeholder='Description'/></td>
+              </tr>
+            </tbody>
+          </table>
+        
+        </form>
+
+        <input type="button" value="Confirm User Added" id="addUser"/>
+        <br/>
+
+      </div> 
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    //ADD MODALS(POPUP DIALOG BOXES) as confirmation if you're sure you want to remove something
+
+
+      $(document).ready(function() {
+
+            // LOAD ALL SERVICES
+            function loadServices() {
+                $.ajax({
+                    url: "dashproducts.php",
+                    type: "GET",
+                    dataType: 'html',
+                    success: function(returnedData) {
+                        console.log("cart checkout response: ", returnedData);
+                        $("#productslist").html(returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus);
+                    }
+                });
+            }
+
+            loadServices();
+
+            // LOAD ALL FOOD
+            function loadFood() {
+                $.ajax({
+                    url: "dashfood.php",
+                    type: "GET",
+                    dataType: 'html',
+                    success: function(returnedData) {
+                        console.log("cart checkout response: ", returnedData);
+                        $("#foodlist").html(returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus);
+                    }
+                });
+            }
+
+            loadFood();
+
+            // LOAD ALL USERS
+            function loadUsers() {
+                $.ajax({
+                    url: "dashusers.php",
+                    type: "GET",
+                    dataType: 'html',
+                    success: function(returnedData) {
+                        console.log("cart checkout response: ", returnedData);
+                        $("#roomlist").html(returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus);
+                    }
+                });
+            }
+
+            loadUsers();
+/*
+        $('#addProduct').click(function() {
+
+          var edit = $('#editproduct');
+          var item = "<tr> <td></td> <td><input id='name' name='name' type='text' placeholder='name'/></td> <td><input id='desc' name='desc' type='text' placeholder='Description'/></td>  <td><input id='price' name='price r' type='text' placeholder='price'/></td>  <td><input id='staff' name='name' type='text' placeholder='staff'/></td> <td><input type='button' value='Remove' id='removeItem'/></td></tr>";
+          edit.append(item);
+
+
+      });
+
+*/
+        $('#addUser').click(function(){
+
+
+          //see if you can eliminate these variable declarations and use the selectors directly in the array declaration
+          var roomid = $("#roomid").val();
+          var password = $("#password").val();
+
+          var itemArray = [];
+
+          //get all the info from the forms
+          var item = {roomid: roomid, password: password};
+          itemArray.push(item);
+
+          var itemsAsJSON = JSON.stringify(itemArray);
+                console.log("itemsAsJSON", itemsAsJSON);
+
+
+                console.log("Confirm addition of user", itemArray);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "addUser", items: itemsAsJSON},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+        });
+
+        $('#addProduct').click(function(){
+
+
+          //see if you can eliminate these variable declarations and use the selectors directly in the array declaration
+          var name = $("#nameService").val();
+          var desc = $("#descService").val();
+          var price = $("#priceService").val();
+          var image = $("#imageService").val();
+
+          var itemArray = [];
+
+          //get all the info from the forms
+          var item = {name: name, image: image, price: price, desc: desc};
+          itemArray.push(item);
+
+          var itemsAsJSON = JSON.stringify(itemArray);
+                console.log("itemsAsJSON", itemsAsJSON);
+
+
+                console.log("Confirm addition of product", itemArray);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "addProduct", items: itemsAsJSON},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+        });
+
+        $('#addFood').click(function(){
+
+
+          //see if you can eliminate these variable declarations and use the selectors directly in the array declaration
+          var name = $("#nameFood").val();
+          var desc = $("#descFood").val();
+          var price = $("#priceFood").val();
+          var image = $("#imageFood").val();
+          var course = $("#courseFood").val();
+
+          var itemArray = [];
+
+          //get all the info from the forms
+          var item = {name: name, image: image, price: price, desc: desc, course: course};
+          itemArray.push(item);
+
+          var itemsAsJSON = JSON.stringify(itemArray);
+                console.log("itemsAsJSON", itemsAsJSON);
+
+
+                console.log("Confirm addition of product", itemArray);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "addFood", items: itemsAsJSON},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+        });
+
+        $("#serviceTable").on("click", "input[data-sku-remove]", function(){
+
+          var serviceid = this.getAttribute('data-sku-remove');
+          console.log(serviceid);
+
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "removeProduct", items: serviceid},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+
+
+        });
+
+        $("#foodTable").on("click", "input[data-sku-remove]", function(){
+
+          var foodid = this.getAttribute('data-sku-remove');
+          console.log(foodid);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "removeFood", items: foodid},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+
+
+        });
+
+        $("#roomTable").on("click", "input[data-sku-remove]", function(){
+
+          var roomid = this.getAttribute('data-sku-remove');
+          console.log(roomid);
+
+                
+                $.ajax({
+                    url: "dashboard.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {action: "removeUser", items: roomid},
+                    success: function(returnedData) {
+                        console.log("cart check out response: ", returnedData);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.statusText, textStatus, jqXHR.responseText);
+                    }
+                });
+
+
+                location.reload();
+
+
+
+        });
+
+      });
+
+    </script>
+
+
+  </body>
+</html>
